@@ -1,0 +1,22 @@
+{{left_sidebar_enabled = True}}
+{{right_sidebar_enabled = True}}
+
+{{extend 'layout.html'}}
+
+
+<h1>
+    {{=nombre_completo}}
+</h1>
+<img src="{{=ruta_imagen}}" alt="mi bella fotito" width = "160" height="160">
+<h2 style="text-align:left;">
+    Mis Amigos
+</h2>
+<ul>{{for amigo in amigos:}}
+
+<li style="font-size:1.2em;	">
+<a href = "{{ URL('ver',args = amigo[1]) }}">
+    {{=amigo[0]}}
+</a>
+</li>
+{{pass}}
+</ul>

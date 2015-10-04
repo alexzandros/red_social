@@ -1,0 +1,204 @@
+timestamp: 2015-10-01T19:34:42.593495
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2015-10-01T19:34:42.830539
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2015-10-01T19:34:43.066781
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-10-01T19:34:43.332837
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2015-10-01T19:34:43.489816
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2015-10-01T19:34:43.648379
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2015-10-01T19:42:27.120084
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:42:27.289118
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:42:27.424345
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:42:27.606009
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:42:27.726596
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:42:28.061720
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:49:46.061909
+CREATE TABLE perfil(
+    id INT AUTO_INCREMENT NOT NULL,
+    fecha_nacimiento DATE,
+    foto VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:49:46.227275
+CREATE TABLE contenido(
+    id INT AUTO_INCREMENT NOT NULL,
+    archivo VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:49:46.338867
+CREATE TABLE foro(
+    id INT AUTO_INCREMENT NOT NULL,
+    Titulo VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T19:53:02.272678
+CREATE TABLE publicacion(
+    id INT AUTO_INCREMENT NOT NULL,
+    foro_id INT  , INDEX foro_id__idx (foro_id), FOREIGN KEY (foro_id) REFERENCES foro (id) ON DELETE CASCADE,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES perfil (id) ON DELETE CASCADE,
+    fecha_publicacion DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T20:01:19.329360
+CREATE TABLE post_en_muro(
+    id INT AUTO_INCREMENT NOT NULL,
+    texto LONGTEXT,
+    contenido INT  , INDEX contenido__idx (contenido), FOREIGN KEY (contenido) REFERENCES contenido (id) ON DELETE CASCADE,
+    id_usuario INT  , INDEX id_usuario__idx (id_usuario), FOREIGN KEY (id_usuario) REFERENCES perfil (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-01T20:02:41.588452
+CREATE TABLE amistad(
+    id INT AUTO_INCREMENT NOT NULL,
+    amigo1 INT  , INDEX amigo1__idx (amigo1), FOREIGN KEY (amigo1) REFERENCES perfil (id) ON DELETE CASCADE,
+    amigo2 INT  , INDEX amigo2__idx (amigo2), FOREIGN KEY (amigo2) REFERENCES perfil (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2015-10-02T20:59:33.883297
+ALTER TABLE auth_user ADD fecha_de_nacimiento DATE;
+success!
+timestamp: 2015-10-02T20:59:34.308701
+ALTER TABLE auth_user ADD foto VARCHAR(512);
+success!
+timestamp: 2015-10-02T20:59:34.632373
+ALTER TABLE auth_user ADD telefono VARCHAR(512);
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-10-03T19:08:51.421925
+ALTER TABLE amistad ADD amigo3 INT  , ADD INDEX amigo3__idx (amigo3), ADD FOREIGN KEY (amigo3) REFERENCES auth_user (id) ON DELETE CASCADE;
+success!
+success!
+timestamp: 2015-10-03T19:12:38.134754
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:12:51.089522
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:13:51.123448
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:13:51.891935
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:14:51.102395
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:14:51.851217
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:17:28.619424
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:17:51.530197
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:18:52.407972
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:19:48.447832
+ALTER TABLE amistad DROP COLUMN amigo3;
+timestamp: 2015-10-03T19:19:52.490478
+ALTER TABLE amistad DROP COLUMN amigo3;

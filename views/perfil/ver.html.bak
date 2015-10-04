@@ -1,0 +1,18 @@
+{{left_sidebar_enabled = True}}
+{{right_sidebar_enabled = True}}
+
+{{extend 'layout.html'}}
+
+
+<h3>
+Estas viendo el perfil de {{=nombre_completo}}
+</h3>
+<img src="{{=ruta_imagen}}" alt="mi bella fotito" width = "160" height="160">
+<h4 style="text-align:left;">
+    Sus Amigos
+</h4>
+<ul>{{for amigo in amigos:}}
+
+<li style="font-size:1.2em;	">{{=amigo}}</li>
+{{pass}}
+</ul>

@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.NameError'> global name 'amigo2' is not defined"
+p3
+sS'layer'
+p4
+S'/home/juliana/web2py/applications/red_social/controllers/perfil.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\n\n@auth.requires_login() \ndef index():\n    id_actual = auth.user.id\n    usuario_actual = db.perfil(db.perfil.user_id == id_actual)\n    form = DIV(\n        H1(auth.user.first_name + " " \n           + auth.user.last_name),\n            IMG(_src = URL(\'downloads\',args = usuario_actual.foto),\n              _width = 160, _height = 160),\n            )\n    lista_amigos = db.amistad(amigo1 = usuario_actual.id |amigo2 ==usuario_actual.id)\n    \n    #for amigo in lista_amigos:\n        #nombre1 = db.perfil(amigo.amigo1).foto\n        #nombre2 = db.perfil(amigo.amigo2).foto\n        #amigos.append([nombre1, nombre2])\n        \n    return dict(form = form, amigos = lista_amigos)\n\n\n\ndef downloads():\n     return response.download(request, db)\n\nresponse._vars=response._caller(index)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/juliana/web2py/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/juliana/web2py/applications/red_social/controllers/perfil.py", line 27, in <module>\n  File "/home/juliana/web2py/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/juliana/web2py/gluon/tools.py", line 3774, in f\n    return action(*a, **b)\n  File "/home/juliana/web2py/applications/red_social/controllers/perfil.py", line 13, in index\n    lista_amigos = db.amistad(amigo1 = usuario_actual.id |amigo2 ==usuario_actual.id)\nNameError: global name \'amigo2\' is not defined\n'
+p11
+s.
